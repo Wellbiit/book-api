@@ -43,8 +43,8 @@ def create_book():
     return response
 
 
-@app.route("/get_bookss_by_date/<date>")\
-#TODO add jwt_required
+@app.route("/get_books_by_date/<date>")
+# TODO add jwt_required
 def get_books_by_date(date):
     print(date)
     date = datetime.fromisoformat(date)
