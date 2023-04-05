@@ -28,17 +28,12 @@ class Book(Base, UserMixin):
 
     id = Column("id", Integer, primary_key=True)
     title = Column("title", String)
-    # author = Column("author", String)
-    # pages = Column("pages", Integer)
     date = Column("date", Date)
     user = Column("user", Integer, ForeignKey("users.id"))
 
     def __init__(self, title, author, pages, date, user):
         super().__init__
         self.title = title
-        # self.author = author
-        # self.pages = pages
-        # self.date = date
         self.user = user
 
 
