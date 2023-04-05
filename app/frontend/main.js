@@ -72,17 +72,17 @@ window.onload = (book) => {
     })
     }
 
-    function getBooksByDate (date) {
-        const apiUrlGet = `http://127.0.0.1:5000/get_books_by_date/${date}`;
-
-        return fetch(apiUrlGet, {
-            method: "GET",})
-          .then(response => response.json())
-
-          .catch(error => {
-            console.error('Помилка:', error);
-          });
-    }
+//    function getBooksByDate (date) {
+//        const apiUrlGet = `http://127.0.0.1:5000/get_books_by_date/${date}`;
+//
+//        return fetch(apiUrlGet, {
+//            method: "GET",})
+//          .then(response => response.json())
+//
+//          .catch(error => {
+//            console.error('Помилка:', error);
+//          });
+//    }
 
     function sendRequestToServer (form, url) {
 
@@ -131,7 +131,7 @@ window.onload = (book) => {
 
                 createElementAndAppendChild("h3", book.title, singleBook);
 
-                createElementAndAppendChild("h3", book.author, singleBook);
+                createElementAndAppendChild("h3", book.date, singleBook);
 
                 createElementAndAppendChild("span", book.pages, singleBook);
 
@@ -146,22 +146,22 @@ window.onload = (book) => {
     }
 
 
-    function renderBooksForFiveDays() {
-        const endDate = new Date();
-        endDate.setDate(endDate.getDate() + 5);
-        let currentDate = new Date();
-
-        while (currentDate <= endDate) {
-            const date = currentDate.toISOString();
-            console.log(date)
-
-            getBooksByDate(date)
-            .then(data => showBooks(data))
-
-            currentDate.setDate(currentDate.getDate() + 1)
-        }
-    }
-}
+//    function renderBooksForFiveDays() {
+//        const endDate = new Date();
+//        endDate.setDate(endDate.getDate() + 5);
+//        let currentDate = new Date();
+//
+//        while (currentDate <= endDate) {
+//            const date = currentDate.toISOString();
+//            console.log(date)
+//
+//            getBooksByDate(date)
+//            .then(data => showBooks(data))
+//
+//            currentDate.setDate(currentDate.getDate() + 1)
+//        }
+//    }
+//}
 
 
 

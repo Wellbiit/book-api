@@ -10,12 +10,12 @@ from werkzeug.security import check_password_hash, generate_password_hash
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
 
 
-def convert_date_to_object(date):
-    return datetime.strptime(date, "%Y-%m-%d").date()
+# def convert_date_to_object(date):
+#     return datetime.strptime(date, "%Y-%m-%d").date()
 
 
 def add_book_to_database(book_data):
-    book_data["date"] = convert_date_to_object(book_data["date"])
+    #book_data["date"] = convert_date_to_object(book_data["date"])
     book_data["user"] = 1
     book = Book(**book_data)
     add_new_item(book)
@@ -43,14 +43,14 @@ def create_book():
     return response
 
 
-@app.route("/get_books_by_date/<date>")
-# TODO add jwt_required
-def get_books_by_date(date):
-    print(date)
-    date = datetime.fromisoformat(date)
-    data = get_books_by(date)
-    response = make_response(data)
-    return response
+# @app.route("/get_books_by_date/<date>")
+# # TODO add jwt_required
+# def get_books_by_date(date):
+#     print(date)
+#     date = datetime.fromisoformat(date)
+#     data = get_books_by(date)
+#     response = make_response(data)
+#     return response
 
 
 @app.route("/test")
