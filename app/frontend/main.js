@@ -116,9 +116,9 @@ window.onload = (book) => {
 
         while (currentDate <= endDate) {
             const date = currentDate.toISOString();
-            console.log(date)
+            console.log(date.slice(0, 10))
 
-            console.log(date.slice(0, 10));
+//            console.log(date.slice(0, 10));
 
             getBooksByDate(date)
             .then(data => showBooks(data))

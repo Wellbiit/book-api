@@ -5,7 +5,6 @@ from flask import jsonify
 from .database import User, Book, session
 from .db_controls import add_new_item, get_books_by, delete_user
 from flask import render_template, request, redirect, make_response
-from flask_login import login_user, login_required, logout_user, current_user
 from werkzeug.security import check_password_hash, generate_password_hash
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
 
@@ -46,7 +45,9 @@ def create_book():
 # TODO add jwt_required
 def get_books_by_date(date):
     print(date)
+    date = date[0:10]
     date = datetime.fromisoformat(date)
+    # date = date[0:10]
     data = get_books_by(date)
     response = make_response(data)
     return response
