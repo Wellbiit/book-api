@@ -50,7 +50,7 @@ window.onload = (book) => {
             sendRequestToServer(signupForm, urlSignup)
             .then(response => {
                 if (response.isRegistered) {
-                    location.replace("/login.html");
+                    location.replace("/index.html");
                 }
             });
     })
@@ -64,6 +64,8 @@ window.onload = (book) => {
             console.error('Помилка:', error);
           });
     }
+
+
     function sendRequestToServer (form, url) {
         const formData = new FormData(form);
         const data = {};
@@ -78,12 +80,16 @@ window.onload = (book) => {
         .then(response => response.json())
         .catch(error => console.error('Помилка:', error));
     }
+
+
     function logout() {
         const btn = document.getElementById("logoutButton");
         btn.addEventListener("click", (book) => {
             localStorage.removeItem("token");
             location.replace("login.html")
         })}
+
+
         function showBooks (data) {
             console.log(data)
             const booksDiv = document.getElementById("display-books");

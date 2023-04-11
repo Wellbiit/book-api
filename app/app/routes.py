@@ -34,6 +34,7 @@ def create_book():
         add_book_to_database(data_from_request)
         response = make_response({"isAdded": True})
         response.status_code = 200
+        # print("isAdded")
     except Exception as e:
         print(e)
         response = make_response({"isAdded": False, "exception": e})
@@ -62,9 +63,9 @@ def index():
 @app.route("/login", methods=["POST"])
 def login():
     data_from_request = request.get_json()
-    name = data_from_request["nickname"]
+    nickname = data_from_request["nickname"]
     password = data_from_request["password"]
-    user_check = session.query(User).where(User.nickname == name).first()
+    user_check = session.query(User).where(User.nickname == nickname).first()
     if user_check:
         if check_password_hash(user_check.password, password):
             token = create_access_token(identity=user_check.id, expires_delta=timedelta(days=30))
@@ -81,8 +82,8 @@ def login():
 def signup():
     data_from_request = request.get_json()
     print(data_from_request)
-    name = data_from_request["nickname"]
-    user_check = session.query(User).where(User.nickname == name).first()
+    nickname = data_from_request["nickname"]
+    user_check = session.query(User).where(User.nickname == nickname).first()
     if user_check:
         response = make_response(jsonify({"isRegistered": False, "reason": "userExists"}), 409)
         return response

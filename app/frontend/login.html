@@ -2,18 +2,81 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
     <title>Login</title>
     <script src="main.js" type="module"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
 </head>
 <body>
     <form method="post" id="login-form">
-        <label for="nickname">Nickname</label><br>
-        <input type="text" id="nickname" name="nickname" required><br>
+        <div class = "text-center mt-5">
+        <form style="max-width:300px;margin:auto;">
 
-        <label for="password">Password</label><br>
-        <input type="text" id="password" name="password" required><br>
+          <img class="mt-4 mb-4" src="61-613147_education-logo-element-reading-book-education-logo-icon.png" height="72" alt="Bootstrap Logo">
+          <h1 class="h3 mb-3 font-weight-normal">Please log in</h1>
 
-        <input type="submit" value="Log in">
+          <label for="nickname" class="sr-only">Nickname</label>
+          <input type="text" id="nickname" name="nickname" class="form-control" placeholder="Nickname" required autofocus>
+
+          <label for="password" class="sr-only">Password</label>
+          <input type="password" id="password" name="password" placeholder="Password" class="form-control">
+
+          <div class="checkbox">
+            <label>
+              <input type="checkbox" value="remember-me"> Remember me
+            </label>
+          </div>
+
+          <div class="mt-3">
+            <input type="submit" class="btn btn-lg bt-primary btn-block" value="Log in">
+          </div>
+
+            <div class="text-center">
+                <p>Not a member? <a href="http://127.0.0.1:8000/signup.html">Register</a></p>
+            </div>
+
+        </form>
+      </div>
     </form>
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <title>Login</title>-->
+<!--    <script src="main.js" type="module"></script>-->
+<!--</head>-->
+<!--<body>-->
+<!--    <form method="post" id="login-form">-->
+<!--        <label for="nickname">Nickname</label><br>-->
+<!--        <input type="text" id="nickname" name="nickname" required><br>-->
+
+<!--        <label for="password">Password</label><br>-->
+<!--        <input type="text" id="password" name="password" required><br>-->
+
+<!--        <input type="submit" value="Log in">-->
+<!--    </form>-->
+<!--</body>-->
+<!--</html>-->
