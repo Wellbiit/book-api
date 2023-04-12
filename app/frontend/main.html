@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Book`s list</title>
+    <link rel="stylesheet" href="style_main.css">
+    <script src="main.js" type="module"></script>
+</head>
+<body>
+    <ul class="navbar">
+        <li><a class="link" href="http://127.0.0.1:8000/index.html">Book finder</a></li>
+        <li><a class="link" href="http://127.0.0.1:8000/login.html">Login</a></li>
+        <li><a class="link">
+            <button id="logoutButton">Log out</button>
+            <div id="display-books"></div>
+        </a>
+    </ul>
+
+    <h1>Main page</h1>
+
+    <h2>Latest Book Information</h2>
+        <p>Title: <span id="latest-book-title"></span></p>
+        <p>Date: <span id="latest-book-date"></span></p>
+
+    <script>
+        function showBooks (data) {
+            console.log(data)
+            const booksDiv = document.getElementById("display-books");
+            const singleDayBooks = createElementAndAppendChild("div", null);
+            singleDayBooks.classList.add("single-day-books");
+            const date = JSON.parse(data[0]).date;
+            console.log(date)
+            if (date) {
+                createElementAndAppendChild("h4", date, singleDayBooks)
+            }
+            data.forEach( (book) => {
+                book = JSON.parse(book);
+                const singleBook = createElementAndAppendChild("div", null, singleDayBooks);
+                createElementAndAppendChild("h3", book.title, singleBook);
+                createElementAndAppendChild("span", book.date, singleBook);
+            })
+        }
+    </script>
+</body>
+</html>
