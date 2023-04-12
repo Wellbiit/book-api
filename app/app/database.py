@@ -28,7 +28,7 @@ class Book(Base, UserMixin):
     date = Column("date", Date)
     user = Column("user", Integer, ForeignKey("users.id"))
 
-    def __init__(self, title, author, pages, date, user):
+    def __init__(self, title, date, user):
         super().__init__
         self.title = title
         self.date = date

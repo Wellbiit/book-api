@@ -3,7 +3,8 @@ window.onload = (book) => {
         {path: '/', handler: homeHandler},
         {path: '/index.html', handler: homeHandler},
         {path: '/login.html', handler: loginHandler},
-        {path: '/signup.html', handler: signupHandler}
+        {path: '/signup.html', handler: signupHandler},
+        {path: '/main.html', handler:displayLatestBook}
     ]
     handleUrlChange();
     function handleUrlChange () {
@@ -27,6 +28,24 @@ window.onload = (book) => {
             sendRequestToServer(bookForm, urlAddBook);
         })
     }
+
+    function displayLatestBook() {
+            const url = 'http://127.0.0.1:5000/main';
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    const latestBook = data[0];
+                    const title = latestBook.title;
+                    const date = latestBook.date;
+
+                    const titleElem = document.getElementById('latest-book-title');
+                    const dateElem = document.getElementById('latest-book-date');
+                    titleElem.textContent = title;
+                    dateElem.textContent = date;
+                })
+            .catch(error => console.error('Error retrieving latest book:', error));
+        }
+
     function loginHandler () {
         const loginForm = document.getElementById("login-form");
         const urlLogin = 'http://127.0.0.1:5000/login';
@@ -64,8 +83,6 @@ window.onload = (book) => {
             console.error('Помилка:', error);
           });
     }
-
-
     function sendRequestToServer (form, url) {
         const formData = new FormData(form);
         const data = {};
@@ -80,20 +97,16 @@ window.onload = (book) => {
         .then(response => response.json())
         .catch(error => console.error('Помилка:', error));
     }
-
-
     function logout() {
         const btn = document.getElementById("logoutButton");
         btn.addEventListener("click", (book) => {
             localStorage.removeItem("token");
             location.replace("login.html")
         })}
-
-
         function showBooks (data) {
             console.log(data)
             const booksDiv = document.getElementById("display-books");
-            const singleDayBooks = createElementAndAppendChild("div", null, eventsDiv);
+            const singleDayBooks = createElementAndAppendChild("div", null);
             singleDayBooks.classList.add("single-day-books");
             const date = JSON.parse(data[0]).date;
             console.log(date)
@@ -124,8 +137,6 @@ window.onload = (book) => {
             const date = currentDate.toISOString();
             console.log(date.slice(0, 10))
 
-//            console.log(date.slice(0, 10));
-
             getBooksByDate(date)
             .then(data => showBooks(data))
 
@@ -141,7 +152,6 @@ window.onload = (book) => {
 
 
 
-JavaScript
 var verify_existance = false;
 
 function queryBooks() {

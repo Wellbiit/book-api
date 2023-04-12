@@ -5,6 +5,7 @@ from flask import jsonify
 from .database import User, Book, session
 from .db_controls import add_new_item, get_books_by, delete_user
 from flask import render_template, request, redirect, make_response
+from flask_login import login_user, login_required, logout_user, current_user
 from werkzeug.security import check_password_hash, generate_password_hash
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
 
@@ -34,7 +35,6 @@ def create_book():
         add_book_to_database(data_from_request)
         response = make_response({"isAdded": True})
         response.status_code = 200
-        # print("isAdded")
     except Exception as e:
         print(e)
         response = make_response({"isAdded": False, "exception": e})
