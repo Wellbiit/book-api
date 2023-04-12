@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,16 +12,20 @@
 </head>
 
 <body id="main">
+    <ul class="navbar">
+        <li><a class="link" href="http://127.0.0.1:8000/login.html">Login</a></li>
+        <li><a class="link" href="http://127.0.0.1:8000/main.html">Main page</a></li>
+    </ul>
 
     <button id="logoutButton">Log out</button>
     <div id="display-books"></div>
 
     <div class="booktit"><b>Book Finder</b></div>
     <form method="post" id="book-form">
-            <input type="search" class="form-control" id="query" placeholder="Search for Books" autocomplete="off" autofocus>'
+            <input type="search" class="form-control" id="query" placeholder="Search for Books" autocomplete="off" autofocus>
             <input type="date" class="form-control" id="data" placeholder="Enter today`s date" autocomplete="off" autofocus>
 
-            <input type="button" class="btn btn-success srcBtn" value="Search" name="btn" onclick="queryBooks()">
+            <input type="button" class="btn btn-success srcBtn" id="search-button" value="Search" name="btn" onclick="queryBooks()">
     </form>
 
     <div class = "results" id="res">

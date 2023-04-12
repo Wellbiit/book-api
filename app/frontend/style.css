@@ -40,7 +40,7 @@ body {
     font-size: 48px;
     color: #696969;
     position: absolute;
-    top: 10vh;
+    top: 20vh;
     left: 35vw;
     /* transform: translate(67%, 70%); */
     /* margin: auto; */
@@ -177,3 +177,43 @@ body {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
   }
+
+li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+li a:hover {
+  background-color: #36cf1b;
+}
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #0fd13c;
+}
+
+li {
+  float: left;
+}
+
+li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+li a:hover {
+  background-color: #bcc7b5;
+}
+
+h1, h2, h3, h6 {
+   text-align: center;
+}
