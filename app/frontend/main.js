@@ -3,8 +3,7 @@ window.onload = (book) => {
         {path: '/', handler: homeHandler},
         {path: '/index.html', handler: homeHandler},
         {path: '/login.html', handler: loginHandler},
-        {path: '/signup.html', handler: signupHandler},
-//        {path: '/main.html', handler: displayLatestBook}
+        {path: '/signup.html', handler: signupHandler}
     ]
     handleUrlChange();
     function handleUrlChange () {
@@ -19,8 +18,6 @@ window.onload = (book) => {
     function homeHandler () {
         console.log("home works");
         const bookForm = document.getElementById("book-form");
-        const searchButton = document.getElementById("search-button");
-
         console.log(bookForm);
         const urlAddBook = 'http://127.0.0.1:5000/create_book';
         renderBooksForFiveDays ()
@@ -29,28 +26,7 @@ window.onload = (book) => {
             book.preventDefault();
             sendRequestToServer(bookForm, urlAddBook);
         })
-        searchButton.addEventListener("click", (event) => {
-            sendRequestToServer(bookForm, urlAddBook)
-        })
     }
-
-//    function displayLatestBook() {
-//            const url = 'http://127.0.0.1:5000/main';
-//            fetch(url)
-//                .then(response => response.json())
-//                .then(data => {
-//                    const latestBook = data[0];
-//                    const title = latestBook.title;
-//                    const date = latestBook.date;
-//
-//                    const titleElem = document.getElementById('latest-book-title');
-//                    const dateElem = document.getElementById('latest-book-date');
-//                    titleElem.textContent = title;
-//                    dateElem.textContent = date;
-//                })
-//            .catch(error => console.error('Error retrieving latest book:', error));
-//        }
-
     function loginHandler () {
         const loginForm = document.getElementById("login-form");
         const urlLogin = 'http://127.0.0.1:5000/login';
@@ -88,6 +64,8 @@ window.onload = (book) => {
             console.error('Помилка:', error);
           });
     }
+
+
     function sendRequestToServer (form, url) {
         const formData = new FormData(form);
         const data = {};
@@ -115,10 +93,8 @@ window.onload = (book) => {
         function showBooks (data) {
             console.log(data)
             const booksDiv = document.getElementById("display-books");
-            const singleDayBooks = createElementAndAppendChild("div", null, booksDiv);
+            const singleDayBooks = createElementAndAppendChild("div", null, eventsDiv);
             singleDayBooks.classList.add("single-day-books");
-//            const dateInput = document.getElementById('dateInput');
-//            const dateComponents = dateInput.slice(0, 10)
             const date = JSON.parse(data[0]).date;
             console.log(date)
             if (date) {
@@ -128,19 +104,16 @@ window.onload = (book) => {
                 book = JSON.parse(book);
                 const singleBook = createElementAndAppendChild("div", null, singleDayBooks);
                 createElementAndAppendChild("h3", book.title, singleBook);
-                createElementAndAppendChild("span", book.date, singleBook);
+                createElementAndAppendChild("h3", book.author, singleBook);
+                createElementAndAppendChild("span", book.pages, singleBook);
             })
         }
-
-
     function createElementAndAppendChild (tagName, content, tagAddTo) {
         const createdElement = document.createElement(tagName);
         if ( content ) { createdElement.textContent = content };
         tagAddTo.appendChild(createdElement);
         return createdElement;
     }
-
-
     function renderBooksForFiveDays() {
 
         const endDate = new Date();
@@ -150,6 +123,8 @@ window.onload = (book) => {
         while (currentDate <= endDate) {
             const date = currentDate.toISOString();
             console.log(date.slice(0, 10))
+
+//            console.log(date.slice(0, 10));
 
             getBooksByDate(date)
             .then(data => showBooks(data))
@@ -166,6 +141,7 @@ window.onload = (book) => {
 
 
 
+JavaScript
 var verify_existance = false;
 
 function queryBooks() {
