@@ -1,3 +1,5 @@
+import json
+
 import requests
 from datetime import datetime, timedelta
 from app import app
@@ -44,20 +46,20 @@ def create_book():
 
 @app.route("/get_books_by_date/<date>")
 # TODO add jwt_required
+@jwt_required()
 def get_books_by_date(date):
     print(date)
     date = date[0:10]
-    date = datetime.fromisoformat(date)
+    # date = datetime.fromisoformat(date)
     # date = date[0:10]
     data = get_books_by(date)
     response = make_response(data)
     return response
 
-
-@app.route("/test")
-def index():
-    res = make_response({"ok?": "ok"})
-    return res
+@app.route("/get_user_by_nickname")
+def get_user_by_nickname(nickname: str):
+    user = session.query(User).where(User.nickname == nickname).first
+    return user
 
 
 @app.route("/login", methods=["POST"])
@@ -75,6 +77,15 @@ def login():
             print(response.get_json())
             return response
     response = make_response({"isLogged": False}, 401)
+    return response
+
+
+@app.route("/index")
+@jwt_required()
+def index():
+    protected_data = "protected"
+    id_user = get_jwt_identity()
+    response = make_response(jsonify({"protected": protected_data, "id": id_user}), 200)
     return response
 
 

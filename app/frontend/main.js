@@ -27,21 +27,69 @@ window.onload = (book) => {
             sendRequestToServer(bookForm, urlAddBook);
         })
     }
+
     function loginHandler () {
-        const loginForm = document.getElementById("login-form");
-        const urlLogin = 'http://127.0.0.1:5000/login';
-        loginForm.addEventListener("submit", (book) => {
-            book.preventDefault();
-            sendRequestToServer(loginForm, urlLogin)
-            .then(response => {
-                if (response.isLogged) {
-                    location.replace("/index.html");
-                    localStorage.setItem("token", response.token);
-                    console.log(localStorage.getItem("token"));
-                }
-            });
+    const loginForm = document.getElementById("login-form");
+    const urlLogin = 'http://127.0.0.1:5000/login';
+    const urlIndex = 'http://127.0.0.1:5000/index';
+
+    loginForm.addEventListener("submit", (book) => {
+    book.preventDefault();
+
+    sendRequestToServer(loginForm, urlLogin)
+    .then(response => {
+        if ( response.isLogged ) {
+            location.replace("/index.html");
+            localStorage.setItem("token", response.token);
+            console.log(localStorage.getItem("token"));
+        }
+    });
     })
+
     }
+
+
+    function sendRequestToServer (form, url) {
+
+        const formData = new FormData(form);
+        const data = {};
+
+        for (const[key, value] of formData.entries()) {
+            data[key] = value;
+        }
+
+        return fetch(url, {
+            method: "POST",
+            headers: {"Content-type": "application/json"},
+            body: JSON.stringify(data)
+        })
+        .then(response => response.json())
+        .catch(error => console.error('Помилка:', error));
+    }
+
+
+    let currentDate = new Date();
+    let date = currentDate.toISOString();
+    let dateToDisplay = convertStringToDate(currentDate);
+
+    function convertStringToDate(str) {
+        return new Date(str).toLocaleDateString();
+    }
+
+    const urlIndex = "http://127.0.0.1:5000/get_books_by_date/${dateToDisplay}";
+
+    const token = localStorage.getItem("token");
+    fetch(urlIndex, {
+        method: 'GET',
+        headers: { Authorization: `Bearer ${token}` }
+    })
+    .then(response => response.json())
+    .then(data => console.log(data))
+    .catch(error => {
+        console.error('Error:', error);
+    });
+
+
     function signupHandler () {
         const signupForm = document.getElementById("signup-form");
         const urlSignup = 'http://127.0.0.1:5000/signup';
@@ -66,20 +114,20 @@ window.onload = (book) => {
     }
 
 
-    function sendRequestToServer (form, url) {
-        const formData = new FormData(form);
-        const data = {};
-        for (const[key, value] of formData.entries()) {
-            data[key] = value;
-        }
-        return fetch(url, {
-            method: "POST",
-            headers: {"Content-type": "application/json"},
-            body: JSON.stringify(data)
-        })
-        .then(response => response.json())
-        .catch(error => console.error('Помилка:', error));
-    }
+//    function sendRequestToServer (form, url) {
+//        const formData = new FormData(form);
+//        const data = {};
+//        for (const[key, value] of formData.entries()) {
+//            data[key] = value;
+//        }
+//        return fetch(url, {
+//            method: "POST",
+//            headers: {"Content-type": "application/json"},
+//            body: JSON.stringify(data)
+//        })
+//        .then(response => response.json())
+//        .catch(error => console.error('Помилка:', error));
+//    }
 
 
     function logout() {
@@ -93,7 +141,7 @@ window.onload = (book) => {
         function showBooks (data) {
             console.log(data)
             const booksDiv = document.getElementById("display-books");
-            const singleDayBooks = createElementAndAppendChild("div", null, eventsDiv);
+            const singleDayBooks = createElementAndAppendChild("div", null, booksDiv);
             singleDayBooks.classList.add("single-day-books");
             const date = JSON.parse(data[0]).date;
             console.log(date)
@@ -139,9 +187,6 @@ window.onload = (book) => {
 
 
 
-
-
-JavaScript
 var verify_existance = false;
 
 function queryBooks() {
