@@ -24,8 +24,11 @@ window.onload = (book) => {
         logout();
         bookForm.addEventListener("submit", (book) => {
             book.preventDefault();
+            console.log(123)
             sendRequestToServer(bookForm, urlAddBook);
         })
+        const submitButton = document.getElementById('submit');
+        submitButton.addEventListener('click', sendBookData);
     }
 
     function loginHandler () {
@@ -48,6 +51,30 @@ window.onload = (book) => {
 
     }
 
+  function sendBookData() {
+  console.log(11111)
+    const title = document.getElementById('query').value;
+    const data = document.getElementById('data').value;
+
+    const bookData = {
+        title: title,
+        data: data
+    };
+    console.log(bookData)
+    return fetch(url, {
+            method: "POST",
+            headers: {"Content-type": "application/json"},
+            body: JSON.stringify(bookData)
+    })
+
+    .then(response => response.json())
+    .then(data => console.log(data))
+    .catch(error => console.error(error));
+
+    bookData.addEventListener("onclick", (book) => {
+    book.preventDefault();
+    })
+    }
 
     function sendRequestToServer (form, url) {
 
@@ -76,18 +103,18 @@ window.onload = (book) => {
         return new Date(str).toLocaleDateString();
     }
 
-    const urlIndex = "http://127.0.0.1:5000/get_books_by_date/${dateToDisplay}";
-
-    const token = localStorage.getItem("token");
-    fetch(urlIndex, {
-        method: 'GET',
-        headers: { Authorization: `Bearer ${token}` }
-    })
-    .then(response => response.json())
-    .then(data => console.log(data))
-    .catch(error => {
-        console.error('Error:', error);
-    });
+    const urlIndex = `http://127.0.0.1:5000/get_books_by_date/${dateToDisplay}`;
+//
+//    const token = localStorage.getItem("token");
+//    fetch(urlIndex, {
+//        method: 'GET',
+//        headers: { Authorization: `Bearer ${token}` }
+//    })
+//    .then(response => response.json())
+//    .then(data => console.log(data))
+//    .catch(error => {
+//        console.error('Error:', error);
+//    });
 
 
     function signupHandler () {
@@ -105,8 +132,12 @@ window.onload = (book) => {
     }
     function getBooksByDate (date) {
         const apiUrlGet = `http://127.0.0.1:5000/get_books_by_date/${date}`;
+        const token = localStorage.getItem("token")
+        console.log(token)
         return fetch(apiUrlGet, {
-            method: "GET",})
+            method: "GET",
+                headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json"}
+          })
           .then(response => response.json())
           .catch(error => {
             console.error('Помилка:', error);
@@ -152,8 +183,7 @@ window.onload = (book) => {
                 book = JSON.parse(book);
                 const singleBook = createElementAndAppendChild("div", null, singleDayBooks);
                 createElementAndAppendChild("h3", book.title, singleBook);
-                createElementAndAppendChild("h3", book.author, singleBook);
-                createElementAndAppendChild("span", book.pages, singleBook);
+                createElementAndAppendChild("h3", book.date, singleBook);
             })
         }
     function createElementAndAppendChild (tagName, content, tagAddTo) {
@@ -162,6 +192,8 @@ window.onload = (book) => {
         tagAddTo.appendChild(createdElement);
         return createdElement;
     }
+
+
     function renderBooksForFiveDays() {
 
         const endDate = new Date();
@@ -170,11 +202,13 @@ window.onload = (book) => {
 
         while (currentDate <= endDate) {
             const date = currentDate.toISOString();
+            const dateU = date.slice(0, 10)
+
             console.log(date.slice(0, 10))
 
 //            console.log(date.slice(0, 10));
 
-            getBooksByDate(date)
+            getBooksByDate(dateU)
             .then(data => showBooks(data))
 
             currentDate.setDate(currentDate.getDate() + 1)

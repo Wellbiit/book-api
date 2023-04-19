@@ -39,7 +39,7 @@ def create_book():
         response.status_code = 200
     except Exception as e:
         print(e)
-        response = make_response({"isAdded": False, "exception": e})
+        response = make_response({"isAdded": False, "exception": str(e)})
         response.status_code = 500
     return response
 
